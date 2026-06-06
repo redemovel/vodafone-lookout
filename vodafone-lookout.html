@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vodafone Business Mobile Security com Lookout</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #E60000;
+    --dark-red: #B20000;
+    --black: #0A0A0A;
+    --white: #FFFFFF;
+    --light-gray: #F4F4F4;
+    --mid-gray: #D8D8D8;
+    --text-gray: #4A4A4A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--black);
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--red);
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .voda-logo-img {
+    height: 48px;
+    width: auto;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .logo-divider {
+    width: 1px;
+    height: 36px;
+    background: #333;
+    flex-shrink: 0;
+  }
+
+  .redemovel-logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .lookout-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--mid-gray);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-left: 2px solid #333;
+    padding-left: 16px;
+    margin-left: 4px;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--black);
+    padding: 80px 40px 0;
+    position: relative;
+    overflow: hidden;
+    min-height: 540px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(230,0,0,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--red);
+  }
+
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: flex-end;
+  }
+
+  .hero-text {
+    padding-bottom: 70px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 20px;
+  }
+
+  .hero h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 0.95;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    font-weight: 300;
+    color: #B0B0B0;
+    line-height: 1.65;
+    max-width: 440px;
+  }
+
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .phone-mockup {
+    width: 200px;
+    height: 380px;
+    background: linear-gradient(160deg, #1a1a1a, #2a2a2a);
+    border-radius: 32px;
+    border: 2px solid #333;
+    position: relative;
+    box-shadow: 0 40px 80px rgba(230,0,0,0.2), 0 0 0 1px #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 0;
+  }
+
+  .phone-screen {
+    width: 84%;
+    height: 88%;
+    background: var(--black);
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    position: relative;
+  }
+
+  .shield-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(230,0,0,0.5);
+    animation: pulse 2s infinite;
+  }
+
+  .shield-icon svg {
+    width: 44px;
+    height: 44px;
+    fill: white;
+  }
+
+  .phone-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .phone-status {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #3BE87A;
+    letter-spacing: 1px;
+  }
+
+  .scan-line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(230,0,0,0.8), transparent);
+    animation: scan 3s infinite linear;
+    top: 0;
+  }
+
+  /* ── PILLARS ── */
+  .pillars {
+    background: var(--red);
+    padding: 0;
+  }
+
+  .pillars-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pillar {
+    padding: 36px 32px;
+    border-right: 1px solid rgba(255,255,255,0.2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .pillar:last-child { border-right: none; }
+
+  .pillar:hover { background: var(--dark-red); }
+
+  .pillar-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .pillar h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ── DELIVERS ── */
+  .delivers {
+    background: var(--light-gray);
+    padding: 100px 40px;
+  }
+
+  .delivers-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+
+  .delivers h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 52px);
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.5px;
+    margin-bottom: 40px;
+  }
+
+  .delivers h2 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .feature-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid var(--red);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .feature-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .feature-dot {
+    width: 36px;
+    height: 36px;
+    background: var(--red);
+    border-radius: 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+
+  .feature-text strong {
+    display: block;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+    color: var(--black);
+  }
+
+  .feature-text p {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.5;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how {
+    background: var(--black);
+    padding: 100px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .how::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -200px;
+    transform: translateY(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(230,0,0,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .how-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .how-header {
+    margin-bottom: 60px;
+    text-align: center;
+  }
+
+  .how h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 56px);
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.5px;
+    color: white;
+  }
+
+  .how h2 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .step {
+    background: #111;
+    padding: 36px 28px;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .step:hover { background: #181818; }
+
+  .step-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 56px;
+    color: #1f1f1f;
+    line-height: 1;
+    margin-bottom: 16px;
+    transition: color 0.3s;
+  }
+
+  .step:hover .step-num { color: var(--red); }
+
+  .step-icon {
+    font-size: 28px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .step h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
+  }
+
+  .step p {
+    font-size: 14px;
+    color: #777;
+    line-height: 1.6;
+  }
+
+  /* ── STATS ── */
+  .stats {
+    background: var(--red);
+    padding: 60px 40px;
+  }
+
+  .stats-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    text-align: center;
+  }
+
+  .stat {
+    padding: 20px;
+    border-right: 1px solid rgba(255,255,255,0.25);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(44px, 5vw, 64px);
+    color: white;
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* ── BENEFITS ── */
+  .benefits {
+    padding: 100px 40px;
+    background: white;
+  }
+
+  .benefits-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .benefits-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .benefits h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(36px, 4vw, 56px);
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -0.5px;
+  }
+
+  .benefits h2 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .benefit-card {
+    background: var(--light-gray);
+    border-radius: 12px;
+    padding: 36px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-top: 4px solid var(--mid-gray);
+  }
+
+  .benefit-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+    border-top-color: var(--red);
+  }
+
+  .benefit-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .benefit-card h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .benefit-card p {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.65;
+  }
+
+  /* ── CTA ── */
+  .cta {
+    background: var(--black);
+    padding: 100px 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(230,0,0,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cta-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .cta h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(40px, 5vw, 64px);
+    text-transform: uppercase;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    color: white;
+    margin-bottom: 24px;
+  }
+
+  .cta h2 em {
+    font-style: normal;
+    color: var(--red);
+  }
+
+  .cta p {
+    font-size: 17px;
+    color: #888;
+    line-height: 1.65;
+    margin-bottom: 48px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 18px 48px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--dark-red);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    padding: 28px 40px;
+    text-align: center;
+    border-top: 1px solid #1a1a1a;
+  }
+
+  footer p {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  footer a {
+    color: var(--red);
+    text-decoration: none;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 30px rgba(230,0,0,0.5); }
+    50% { box-shadow: 0 0 50px rgba(230,0,0,0.8), 0 0 80px rgba(230,0,0,0.3); }
+  }
+
+  @keyframes scan {
+    0% { top: 10%; }
+    100% { top: 90%; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    header { padding: 14px 20px; }
+    .hero { padding: 60px 20px 0; min-height: auto; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .hero-text { padding-bottom: 50px; }
+    .pillars-inner { grid-template-columns: 1fr; }
+    .pillar { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    .pillar:last-child { border-bottom: none; }
+    .delivers { padding: 60px 20px; }
+    .delivers-inner { grid-template-columns: 1fr; gap: 40px; }
+    .how { padding: 60px 20px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .stats-inner { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.25); padding: 28px 20px; }
+    .stat:last-child { border-bottom: none; }
+    .benefits { padding: 60px 20px; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .cta { padding: 60px 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .steps { grid-template-columns: 1fr; }
+    .lookout-badge { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-area">
+    <img class="voda-logo-img" src="Agente_autorizado_VDF.jpg" alt="Agente Autorizado Vodafone">
+    <div class="logo-divider"></div>
+    <!-- Redemovel logo -->
+    <div class="redemovel-logo">
+      <img src="LogoTeal.jpg" alt="Redemovel" style="height:44px; width:auto; border-radius:8px;">
+    </div>
+    <div class="lookout-badge">com Lookout</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Cibersegurança Móvel Empresarial</p>
+      <h1>Proteja<br>o que<br><em>mais importa</em></h1>
+      <p class="hero-sub">A Vodafone Business simplifica a segurança móvel da sua organização. A nossa parceria com a Lookout garante proteção avançada contra phishing, apps maliciosas e vulnerabilidades nos dispositivos.</p>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="scan-line"></div>
+          <div class="shield-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
+            </svg>
+          </div>
+          <div class="phone-label">Lookout</div>
+          <div class="phone-status">● Protegido</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pillars">
+  <div class="pillars-inner">
+    <div class="pillar">
+      <span class="pillar-icon">🛡️</span>
+      <h3>Defesa Avançada contra Ameaças Móveis</h3>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">🔒</span>
+      <h3>Proteção Cibernética Permanente</h3>
+    </div>
+    <div class="pillar">
+      <span class="pillar-icon">✅</span>
+      <h3>Conformidade e Crescimento Seguros</h3>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERS -->
+<section class="delivers">
+  <div class="delivers-inner">
+    <div>
+      <p class="section-label">O que entregamos</p>
+      <h2>Tecnologia que<br><em>trabalha</em><br>por si</h2>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-dot">🤖</div>
+          <div class="feature-text">
+            <strong>Deteção de Ameaças com Inteligência Artificial</strong>
+            <p>Proteção contra phishing, apps maliciosas, riscos de rede e vulnerabilidades de dispositivos.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">🔐</div>
+          <div class="feature-text">
+            <strong>Acesso Zero-Trust para Endpoints Móveis</strong>
+            <p>Só dispositivos saudáveis acedem aos dados corporativos — sem exceções.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">📊</div>
+          <div class="feature-text">
+            <strong>Pontuação de Risco em Tempo Real</strong>
+            <p>Remediação automática baseada em políticas definidas pela sua organização.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">📋</div>
+          <div class="feature-text">
+            <strong>Relatórios de Conformidade</strong>
+            <p>Dashboards prontos para auditoria — demonstre conformidade com confiança.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">🔗</div>
+          <div class="feature-text">
+            <strong>Integração com Microsoft 365 e Vodafone CyberHub</strong>
+            <p>Funciona perfeitamente com as ferramentas que já utiliza.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="section-label">O que ganha</p>
+      <h2>Resultados<br><em>concretos</em><br>para o seu negócio</h2>
+      <div class="feature-list">
+        <div class="feature-item">
+          <div class="feature-dot">👁️</div>
+          <div class="feature-text">
+            <strong>Visibilidade Total das Ameaças</strong>
+            <p>Monitorize todos os dispositivos móveis da organização numa única consola.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">💪</div>
+          <div class="feature-text">
+            <strong>Maior Resiliência Cibernética</strong>
+            <p>Uma abordagem mobile-first que reforça toda a sua postura de segurança.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">📉</div>
+          <div class="feature-text">
+            <strong>Menor Exposição a Ataques</strong>
+            <p>Reduza o risco de ataques originados em dispositivos móveis dos colaboradores.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">⚖️</div>
+          <div class="feature-text">
+            <strong>Conformidade Regulatória</strong>
+            <p>Cumpra os requisitos de compliance com tranquilidade e sem esforço adicional.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-dot">📱</div>
+          <div class="feature-text">
+            <strong>Trabalho Remoto Seguro</strong>
+            <p>Os colaboradores trabalham com segurança — dentro ou fora do escritório.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="how-header">
+      <p class="section-label" style="color: var(--red); text-align:center;">Como funciona</p>
+      <h2>Segurança <em>avançada</em><br>em 4 passos</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <span class="step-icon">📱</span>
+        <h3>Monitorização</h3>
+        <p>Vigilância contínua de todos os dispositivos móveis contra phishing, apps maliciosas, redes suspeitas e vulnerabilidades.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <span class="step-icon">🧠</span>
+        <h3>Análise com IA</h3>
+        <p>Análise comportamental e telemetria de mais de 215 milhões de dispositivos detetam ameaças antes de causarem dano.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <span class="step-icon">⚡</span>
+        <h3>Resposta Automática</h3>
+        <p>Aplicação de políticas de remediação e integração com Microsoft 365 e outras plataformas empresariais.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <span class="step-icon">🔍</span>
+        <h3>Visibilidade Completa</h3>
+        <p>De erros de configuração a ataques direcionados — saiba tudo o que acontece e mantenha-se sempre um passo à frente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-num">215M+</span>
+      <div class="stat-label">Dispositivos protegidos mundialmente</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">+120%</span>
+      <div class="stat-label">Aumento de ameaças móveis em 2021–2022</div>
+    </div>
+    <div class="stat">
+      <span class="stat-num">25%</span>
+      <div class="stat-label">Dos colaboradores clicam em links de phishing em testes</div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits">
+  <div class="benefits-inner">
+    <div class="benefits-header">
+      <p class="section-label">Para a sua empresa</p>
+      <h2>Simples de implementar,<br><em>poderoso</em> na proteção</h2>
+    </div>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">☁️</span>
+        <h3>Baseado na Cloud</h3>
+        <p>Solução 100% cloud — sem infraestrutura adicional, sem complexidade. Ativa e funcional em minutos.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📲</span>
+        <h3>iOS, Android e ChromeOS</h3>
+        <p>Protege todos os sistemas operativos móveis dos seus colaboradores numa única plataforma unificada.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🖥️</span>
+        <h3>Consola de Gestão</h3>
+        <p>Monitorize e gerencie o nível de proteção de todos os dispositivos através de uma consola centralizada e intuitiva.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🔒</span>
+        <h3>Privacidade Garantida</h3>
+        <p>A Lookout não recolhe dados pessoais dos colaboradores. Certificada FedRAMP com os mais elevados padrões de privacidade.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🏢</span>
+        <h3>Ideal para PME</h3>
+        <p>Desenhado para empresas sem equipas dedicadas de TI e segurança — proteção profissional acessível a todos.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📡</span>
+        <h3>Rede Vodafone</h3>
+        <p>Tecnologia Lookout aliada à conectividade de excelência da rede Vodafone — uma oferta única no mercado nacional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h2>A sua segurança<br>é a nossa <em>prioridade</em></h2>
+    <p>Fale com o seu Gestor de Conta Vodafone e descubra como proteger a sua organização contra ameaças cibernéticas móveis — de forma simples, escalável e eficaz.</p>
+    <a href="http://www.redemovel.pt/contactos/" target="_blank" class="cta-btn">Saber Mais</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex; align-items:center; justify-content:center; gap:24px; margin-bottom:16px; flex-wrap:wrap;">
+    <img src="Agente_autorizado_VDF.jpg" alt="Agente Autorizado Vodafone" style="height:40px; width:auto;">
+    <img src="LogoTeal.jpg" alt="Redemovel" style="height:36px; width:auto; border-radius:6px;">
+  </div>
+  <p>© Vodafone Group 2025. Este documento é baseado em informação oficial da Vodafone. A Vodafone e os logótipos da Vodafone são marcas registadas do Vodafone Group. As informações aqui contidas estão corretas à data de publicação e podem estar sujeitas a alterações. Todos os serviços estão sujeitos a termos e condições.<br>
+  Contacte-nos em <a href="http://www.redemovel.pt/contactos/" target="_blank">redemovel.pt/contactos</a></p>
+</footer>
+
+</body>
+</html>
